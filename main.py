@@ -1,7 +1,7 @@
-from backend import Backend
+from ascii_converter import ASCIIConverter
 from ui.app import App
 
 if __name__ == "__main__":
-    backend = Backend()
-    app = App(backend)
+    converter = ASCIIConverter()
+    app = App(converter)
     app.mainloop()

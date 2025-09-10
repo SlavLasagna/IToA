@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 from PIL import ImageGrab
 
+from ui.status_bar import StatusBar
 
 class FileSelector(tk.Frame):
     """
@@ -11,10 +12,11 @@ class FileSelector(tk.Frame):
      - small label showing the current status / selected file
     """
 
-    def __init__(self, parent, on_file_selected=None, on_clipboard_selected=None):
+    def __init__(self, parent, on_file_selected=None, on_clipboard_selected=None, status_bar: StatusBar=None):
         super().__init__(parent)
         self.on_file_selected = on_file_selected
         self.on_clipboard_selected = on_clipboard_selected
+        self.status_bar = status_bar
 
         self._build()
 
@@ -24,39 +26,21 @@ class FileSelector(tk.Frame):
         file_button.pack(side=tk.LEFT, padx=5)
 
         clipboard_button = tk.Button(self, text="Copy from clipboard", command=self._from_clipboard)
-        clipboard_button.pack(side=tk.LEFT, padx=5)
-
-        # Status / file label
-        self.file_label = tk.Label(self, text="", fg="green")
-        self.file_label.pack(side=tk.RIGHT, padx=5)
+        clipboard_button.pack(side=tk.RIGHT, padx=5)
 
     def _choose_file(self):
         filepath = filedialog.askopenfilename()
-        # If user cancelled, filepath may be empty string
         if not filepath:
             return
-        # Update label (optimistic)
-        self.set_text(f"Selected file: {filepath}", color="green")
         if callable(self.on_file_selected):
-            try:
-                self.on_file_selected(filepath)
-            except Exception:
-                # Let the parent widget handle errors (it may update the label)
-                pass
+            self.on_file_selected(filepath)
+
 
     def _from_clipboard(self):
-        image = ImageGrab.grabclipboard()
-        if image is None:
-            self.set_text("No image in clipboard", color="red")
-            return
-        self.set_text("Copied image from clipboard", color="green")
+        try:
+            image = ImageGrab.grabclipboard()
+        except Exception:
+            image = None
         if callable(self.on_clipboard_selected):
-            try:
-                self.on_clipboard_selected(image)
-            except Exception:
-                # Let the parent handle exceptions
-                pass
+            self.on_clipboard_selected(image)
 
-    def set_text(self, text: str, color: str = "green"):
-        """Convenience method to update the internal label."""
-        self.file_label.config(text=text, fg=color)

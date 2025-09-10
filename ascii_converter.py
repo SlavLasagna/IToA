@@ -1,11 +1,15 @@
+from os.path import splitext
 from PIL import Image
 
 class ImageProcessingError(Exception):
     """Custom exception for image processing errors."""
     pass
 
+class FileTypeError(Exception):
+    """Custom exception for unwanted file type errors."""
+    pass
 
-class Backend:
+class ASCIIConverter:
     FONT_RATIO = 0.44
 
     def __init__(self):
@@ -13,13 +17,20 @@ class Backend:
 
     def load_file(self, filepath: str) -> None:
         """Load image from a file."""
+        self.image = None
+        allowed_extensions = ['.png', '.jpg', '.jpeg', '.webm', '.bmp']
         try:
             self.image = Image.open(filepath)
         except Exception as e:
-            raise ImageProcessingError(f"Could not open file: {filepath}") from e
+            name, ext = splitext(filepath)
+            if ext.lower() not in allowed_extensions:
+                raise FileTypeError(f"File extension is not from an image") from e
+            else:
+                raise ImageProcessingError(f"Could not open file: {filepath}") from e
 
     def load_clipboard(self, image: Image.Image) -> None:
         """Load image from clipboard (expects a PIL.Image object)."""
+        self.image = None
         if image is None:
             raise ImageProcessingError("No image found in clipboard")
         self.image = image
