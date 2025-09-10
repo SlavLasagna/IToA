@@ -70,7 +70,7 @@ python app.py
 
 ## Example
 
-Image input: [Github Logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbqj9Ii13d6hx5a9kyLnC5A8A96LDSaSZv_w&s)
+Image input: [GitHub Logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbqj9Ii13d6hx5a9kyLnC5A8A96LDSaSZv_w&s)
 
 Settings:
 - Size = 64 x 64 px
@@ -115,17 +115,24 @@ Output ASCII :
 
 ```
 IToA/
-|----app.py
+├── backend.py
+├── main.py
+└── ui/
+    ├── app.py
+    ├── char_selector.py
+    ├── file_selector.py
+    ├── result_viewer.py
+    ├── size_selector.py
+    └── status_bar.py
 ```
-(Currently, everything is in a single file, will be split later)
 
 ---
 
 ## Roadmap
 
-- Factorize code (split backend logic and UI)
-- Add export options (saving to text file or bitmap)
-- Package as a standalone executable
+☑ Factorize code (split backend logic and UI) <br>
+☐ Add export options (saving to text file or bitmap) <br>
+☐ Package as a standalone executable
 
 ---
 
