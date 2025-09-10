@@ -21,6 +21,7 @@ to the clipboard, and export to text files.
   - Display ASCII art in a scrollable new window
   - Copy ASCII art to clipboard
   - Export ASCII art to text files
+  - Automatically open text files after exporting and saving 
 - **Error handling** with simple popup messages
 
 ---
@@ -31,6 +32,7 @@ to the clipboard, and export to text files.
 - Dependencies:
   - [Pillow](https://pypi.org/project/pillow/) `pip install pillow`
   - [Tkinter](https://docs.python.org/fr/3.13/library/tkinter.html) `pip install tkinter` (usually comes preinstalled with Python)
+  - Pillow-compatible clipboard package such as `xclip` or `wl-clipboard` (Linux only) 
 
 ---
 
@@ -55,7 +57,7 @@ pip install tkinter
 
 Run the program:
 ```bash
-python app.py
+python main.py
 ```
 
 ### Steps:
@@ -187,8 +189,8 @@ IToA/
 ## Notes & Warnings
 
 - Pixels of images that are completely transparent will be rendered black.
-- Because fonts are not equal in width and height, ASCII arts tend to warp vertically the smaller the font size is. <br>
-  This means that, because font size is locked to the image size, when displayed in the GUI, the bigger the image, <br>
+- Because fonts are not equal in width and height, ASCII arts tend to warp vertically the smaller the font size is.
+  This means that, because font size is locked to the image size, when displayed in the GUI, the bigger the image,
   the bigger the distortion.
 
 ---
